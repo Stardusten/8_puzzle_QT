@@ -37,7 +37,7 @@ private:
 public:
     bitmap(): buf(nullptr){}
     bitmap(const int & siz){
-        buf=new int[ceil(siz/32)];
+        buf=new int[ceil(siz/32)]();
     }
     ~bitmap(){
         delete [] buf;

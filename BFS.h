@@ -5,6 +5,8 @@
 #include<string>
 #include<algorithm>
 #include<QString>
+#include<QEventLoop>
+#include<QTimer>
 #include<vector>
 #include"algo_base.h"
 
@@ -86,7 +88,7 @@ bool BFS::bfs(){
     q.push_back(ini); // Push ini state into the Open list
     front=0, rear=1;
     while(front<rear){ // Loop until queue is empty
-        state & cur=q[front];
+        state cur=q[front];
         if(!memcmp(cur.s,goal.s,sizeof(goal.s))){ // Find!
             return true;
         }
