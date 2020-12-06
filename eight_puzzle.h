@@ -12,6 +12,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QGroupBox>
+#include<QTextBrowser>
 
 using namespace std;
 
@@ -26,7 +27,7 @@ class eight_puzzle : public QWidget
 public:
     eight_puzzle(QWidget *parent = nullptr);
     ~eight_puzzle();
-    QLineEdit *path;
+    QTextBrowser *path;
 
 public slots:
     void update_grid_ini(const QString &); // 根据输入实时更新棋盘数据
@@ -35,6 +36,10 @@ public slots:
 
 private:
     Ui::eight_puzzle *ui;
+    QLabel *nodes;
+    QLabel *time;
+    QLabel *memory;
+    QLabel *steps;
     QComboBox *method;
     QLineEdit *input_line;
     QLineEdit *output_line;

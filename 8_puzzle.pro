@@ -13,7 +13,12 @@ SOURCES += \
     eight_puzzle.cpp
 
 HEADERS += \
+    A_star.h \
+    BFS.h \
+    DFS.h \
     IDA_star.h \
+    IDDFS.h \
+    algo_base.h \
     eight_puzzle.h
 
 FORMS += \
