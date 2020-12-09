@@ -9,6 +9,19 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    A_star.cpp \
+    BFS.cpp \
+    DFS.cpp \
+    IDA_star.cpp \
+    IDDFS.cpp \
+    a_star_graph.cpp \
+    advanced_analyse_tool.cpp \
+    base.cpp \
+    bfs_graph.cpp \
+    bitmap.cpp \
+    graph_select.cpp \
+    heu_func_select.cpp \
+    ida_star_graph.cpp \
     main.cpp \
     eight_puzzle.cpp
 
@@ -18,8 +31,15 @@ HEADERS += \
     DFS.h \
     IDA_star.h \
     IDDFS.h \
-    algo_base.h \
-    eight_puzzle.h
+    a_star_graph.h \
+    advanced_analyse_tool.h \
+    base.h \
+    bfs_graph.h \
+    bitmap.h \
+    eight_puzzle.h \
+    graph_select.h \
+    heu_func_select.h \
+    ida_star_graph.h
 
 FORMS += \
     eight_puzzle.ui
@@ -31,3 +51,5 @@ TRANSLATIONS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \

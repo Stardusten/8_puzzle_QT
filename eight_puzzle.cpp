@@ -5,6 +5,7 @@
 #include "IDDFS.h"
 #include "A_star.h"
 #include "DFS.h"
+#include "advanced_analyse_tool.h"
 
 eight_puzzle::eight_puzzle(QWidget *parent)
     : QWidget(parent)
@@ -23,6 +24,7 @@ eight_puzzle::eight_puzzle(QWidget *parent)
     for(int i=0;i<9;i++){
         block_ini[i]= new QLineEdit;
         block_ini[i]->setMaximumWidth(20);
+        block_ini[i]->setReadOnly(true);
         block_ini[i]->setAlignment(Qt::AlignCenter);
         // Connect to get input
         grid_ini->addWidget(block_ini[i], i/3, i%3);
@@ -38,6 +40,7 @@ eight_puzzle::eight_puzzle(QWidget *parent)
     for(int i=0;i<9;i++){
         block_goal[i]= new QLineEdit;
         block_goal[i]->setMaximumWidth(20);
+        block_goal[i]->setReadOnly(true); // 设为只读
         block_goal[i]->setAlignment(Qt::AlignCenter);
         // Connect to get input
         grid_goal->addWidget(block_goal[i], i/3, i%3);
@@ -56,6 +59,9 @@ eight_puzzle::eight_puzzle(QWidget *parent)
     QLabel *input = new QLabel("Ini: ");
     input_line = new QLineEdit;
     input_line->setMaxLength(9); // 最多输入 9 个数
+    input_line->setValidator(new QIntValidator());
+    input_line->setText("123456780");
+    update_grid_ini(input_line->text());
     connect(input_line, &QLineEdit::textChanged, this, &eight_puzzle::update_grid_ini);
     IN->addWidget(input);
     IN->addWidget(input_line);
@@ -64,6 +70,9 @@ eight_puzzle::eight_puzzle(QWidget *parent)
     QLabel *output = new QLabel("Goal: ");
     output_line = new QLineEdit;
     output_line->setMaxLength(9); // 最多输入 9 个数
+    output_line->setValidator(new QIntValidator());
+    output_line->setText("123456708");
+    update_grid_goal(output_line->text());
     connect(output_line, &QLineEdit::textChanged, this, &eight_puzzle::update_grid_goal);
     OUT->addWidget(output,0);
     OUT->addWidget(output_line,1);
@@ -84,15 +93,25 @@ eight_puzzle::eight_puzzle(QWidget *parent)
     METHOD->addWidget(method,1);
     r_column->addLayout(METHOD, cnt++);
 
+    QHBoxLayout *buttoms = new QHBoxLayout;
 
     //  计算
     QPushButton *calc = new QPushButton("Calculate");
     connect(calc, SIGNAL(clicked()), this, SLOT(calc_func()));
-    r_column->addWidget(calc,cnt++);
+    buttoms->addWidget(calc);
 
+    // 高级功能
+    QPushButton *advanced  = new QPushButton("Advanced");
+    connect(advanced, SIGNAL(clicked()), this, SLOT(advanced_func()));
+    buttoms->addWidget(advanced);
+
+    r_column->addLayout(buttoms);
     UP->addLayout(r_column);
 
     mainUI->addLayout(UP);
+
+
+    // 结果部分
 
     QVBoxLayout *DOWN = new QVBoxLayout;
 
@@ -134,7 +153,7 @@ eight_puzzle::eight_puzzle(QWidget *parent)
 
     mainUI->addLayout(DOWN);
 
-    resize(500,200);
+    resize(500,150);
 }
 
 eight_puzzle::~eight_puzzle()
@@ -155,6 +174,8 @@ void eight_puzzle::update_grid_goal(const QString & in){
 }
 
 void eight_puzzle::calc_func(){
+    if(input_line->text().length()<9) return;
+    if(output_line->text().length()<9) return;
     switch(method->currentIndex()){
     case 0:{
         BFS *c0=new BFS;
@@ -212,5 +233,12 @@ void eight_puzzle::calc_func(){
         break;
     }
     }
+    return;
+}
+
+void eight_puzzle::advanced_func(){
+    Advanced_analyse_tool *ad = new Advanced_analyse_tool;
+    ad->set(input_line->text(), output_line->text(), method->currentIndex());
+    ad->show();
     return;
 }

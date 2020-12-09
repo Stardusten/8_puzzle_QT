@@ -12,7 +12,10 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QGroupBox>
-#include<QTextBrowser>
+#include <QTextBrowser>
+#include <QIntValidator>
+#include <QSplashScreen>
+#include <QPixmap>
 
 using namespace std;
 
@@ -24,6 +27,7 @@ class eight_puzzle : public QWidget
 {
     Q_OBJECT
 
+    friend class Advanced_analyse_tool;
 public:
     eight_puzzle(QWidget *parent = nullptr);
     ~eight_puzzle();
@@ -33,6 +37,7 @@ public slots:
     void update_grid_ini(const QString &); // 根据输入实时更新棋盘数据
     void update_grid_goal(const QString &); // 根据输入实时更新棋盘数据
     void calc_func();
+    void advanced_func();
 
 private:
     Ui::eight_puzzle *ui;
