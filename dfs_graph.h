@@ -1,5 +1,5 @@
-#ifndef IDA_star_graph_H
-#define IDA_star_graph_H
+#ifndef DFS_graph_H
+#define DFS_graph_H
 
 #include <QWidget>
 #include <QObject>
@@ -7,16 +7,15 @@
 #include "bitmap.h"
 
 extern const int d[9][4];
-extern const int manhattan[9][9];
 
-class IDA_star_graph : public QWidget
+class DFS_graph : public QWidget
 {
     Q_OBJECT
 
 // 绘图部分
 public:
-    explicit IDA_star_graph(QWidget* parent = 0);
-    ~IDA_star_graph();
+    explicit DFS_graph(QWidget* parent = 0);
+    ~DFS_graph();
 
 protected:
     void paintEvent(QPaintEvent *);
@@ -32,7 +31,6 @@ private:
         int pos; // Position of space
         int steps; // Steps to reach current state
         int prepos;
-        int f,h;
         double px,py;
         double fpx,fpy;
     }ini,goal;
@@ -41,7 +39,7 @@ private:
 
     const int h=20; // 每层高
 
-    int max_f;
+    const int max_depth=30;
 
     const double w[32]={ // 第 i 层两节点间宽度的一半
         300,
@@ -80,7 +78,6 @@ private:
 
     // 工具函数
     bool is_solvable(const state &, const state &);
-    int calc_manhattan(const state &,const state &);
 };
 
-#endif // IDA_star_graph_H
+#endif // DFS_graph_H

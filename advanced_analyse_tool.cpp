@@ -1,6 +1,9 @@
 #include "advanced_analyse_tool.h"
 #include "bfs_graph.h"
 #include "a_star_graph.h"
+#include "dfs_graph.h"
+#include "iddfs_graph.h"
+#include "ida_star_graph.h"
 #include "heu_func_select.h"
 
 Advanced_analyse_tool::Advanced_analyse_tool(QWidget *parent) : QWidget(parent)
@@ -41,7 +44,24 @@ void Advanced_analyse_tool::Visualize_func(){
         g1->show();
         break;
     }
-    default: break;
+    case 2:{
+        DFS_graph *g2 = new DFS_graph;
+        g2->set(input_line, output_line);
+        g2->show();
+        break;
+    }
+    case 3:{
+        IDDFS_graph *g3 = new IDDFS_graph;
+        g3->set(input_line, output_line);
+        g3->show();
+        break;
+    }
+    case 4:{
+        IDA_star_graph *g4 = new IDA_star_graph;
+        g4->set(input_line, output_line);
+        g4->show();
+        break;
+    }
     }
     this->close();
 }

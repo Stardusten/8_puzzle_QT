@@ -160,7 +160,7 @@ private:
         int s[9]; // 0 represents Space
         int pos; // Position of space
     }ini,goal;
-    int max_f=31,nodes=0,need_steps;
+    int max_f=30,nodes=0,need_steps;
     std::stack<state> path;
     clock_t start,end;
 

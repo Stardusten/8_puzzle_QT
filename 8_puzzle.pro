@@ -19,9 +19,11 @@ SOURCES += \
     base.cpp \
     bfs_graph.cpp \
     bitmap.cpp \
+    dfs_graph.cpp \
     graph_select.cpp \
     heu_func_select.cpp \
     ida_star_graph.cpp \
+    iddfs_graph.cpp \
     main.cpp \
     eight_puzzle.cpp
 
@@ -36,10 +38,12 @@ HEADERS += \
     base.h \
     bfs_graph.h \
     bitmap.h \
+    dfs_graph.h \
     eight_puzzle.h \
     graph_select.h \
     heu_func_select.h \
-    ida_star_graph.h
+    ida_star_graph.h \
+    iddfs_graph.h
 
 FORMS += \
     eight_puzzle.ui
@@ -53,3 +57,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+
+ICON = Icon.icns

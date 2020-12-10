@@ -108,6 +108,7 @@ void Heu_func_select::graph(){
     g->set(ini_line, goal_line, A, B);
     g->show();
     nodes_show->setText(QString::number(g->traveled_nodes()));
+    qDebug()<<g->traveled_nodes()<<Qt::endl;
     time_show->setText(QString::number(g->time()));
     steps_show->setText(QString::number(g->need_steps()));
 }

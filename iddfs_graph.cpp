@@ -1,29 +1,16 @@
-#include "ida_star_graph.h"
+#include "IDDFS_graph.h"
 #include <QPainter>
 #include <QDebug>
 
-int IDA_star_graph::calc_manhattan(const state & cur,const state & goal){
-    int dis=0;
-    for(int i=0;i<9;i++){
-        if(!cur.s[i]) continue;
-        for(int j=0;j<9;j++){
-            if(cur.s[i]==goal.s[j]){
-                dis+=manhattan[i][j];
-            }
-        }
-    }
-    return dis;
-}
-
-IDA_star_graph::IDA_star_graph(QWidget* parent)
+IDDFS_graph::IDDFS_graph(QWidget* parent)
     : QWidget(parent){
     setWindowTitle("Advanced Analyse Tools");
     resize(650,700);
 }
 
-IDA_star_graph::~IDA_star_graph(){}
+IDDFS_graph::~IDDFS_graph(){}
 
-void IDA_star_graph::set(const QString & input1, const QString & input2){
+void IDDFS_graph::set(const QString & input1, const QString & input2){
     for(int i=0;i<9;i++){
         ini.s[i]=int(input1[i].toLatin1()-'0');
         goal.s[i]=int(input2[i].toLatin1()-'0');
@@ -32,7 +19,7 @@ void IDA_star_graph::set(const QString & input1, const QString & input2){
     }
 }
 
-bool IDA_star_graph::is_solvable(const state & ini, const state & goal){
+bool IDDFS_graph::is_solvable(const state & ini, const state & goal){
     int n1=0,n2=0; // Inverse number
     for(int i=0;i<9;i++){
         for(int j=i+1;j<9;j++){
@@ -44,7 +31,7 @@ bool IDA_star_graph::is_solvable(const state & ini, const state & goal){
     return 1; // Different parity => Insolvable
 }
 
-void IDA_star_graph::paintEvent(QPaintEvent *){
+void IDDFS_graph::paintEvent(QPaintEvent *){
 
     // 指定绘图设备
     QPainter painter(this);
@@ -71,11 +58,8 @@ void IDA_star_graph::paintEvent(QPaintEvent *){
 
     if(is_solvable(ini,goal)){
         while(!st.empty()) st.pop();
-        max_f=calc_manhattan(ini,goal);
         ini.steps=0;
         ini.prepos=-1;
-        ini.h=calc_manhattan(ini,goal);
-        ini.f=ini.steps+ini.h;
         ini.px=ini.py=ini.fpx=ini.fpy=0;
 
         //qDebug()<<ini.pos<<Qt::endl;
@@ -94,7 +78,7 @@ void IDA_star_graph::paintEvent(QPaintEvent *){
                 //qDebug()<<cur.px<<cur.py<<cur.steps;
                 return;
             }
-            if(cur.steps+cur.f>max_f) continue;
+            if(cur.steps>max_depth) continue;
             for(int i=3;i>=0;i--){ // 保持 UDLR 的搜索顺序
                 if(d[cur.pos][i]==cur.prepos) continue;
                 if(~d[cur.pos][i]){
@@ -104,8 +88,6 @@ void IDA_star_graph::paintEvent(QPaintEvent *){
                     std::swap(next.s[next.pos], next.s[cur.pos]);
                     next.steps=cur.steps+1;
                     next.prepos=cur.pos;
-                    next.h=calc_manhattan(next,goal);
-                    next.f=next.steps+next.h;
                     // 设置 next 坐标
                     next.px=cur.px-(3.0-i*2)*w[next.steps];
                     next.py=cur.py+h;
@@ -115,7 +97,7 @@ void IDA_star_graph::paintEvent(QPaintEvent *){
                 }
             }
         }
-        max_f++;
+        max_depth++;
         goto FLAG;
     }
 }
