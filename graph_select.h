@@ -23,6 +23,9 @@ public:
 protected:
     void paintEvent(QPaintEvent *);
 
+signals:
+    void sig_update(const double &, const int &, const int &);
+
 // 主算法部分
 public:
     void set(const QString &, const QString &, const int &, const int &);

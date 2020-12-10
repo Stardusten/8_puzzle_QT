@@ -7,37 +7,6 @@ Heu_func_select::Heu_func_select(QWidget* parent)
     : QWidget(parent){
     setWindowTitle("Heu_func Comparison");
 
-    /*QHBoxLayout *mainUI = new QHBoxLayout(this);
-
-    QVBoxLayout *L = new QVBoxLayout;
-
-    QHBoxLayout *IN_A = new QHBoxLayout;
-    QHBoxLayout *IN_B = new QHBoxLayout;
-
-    QLabel *Introduction = new QLabel("f(x)=A*g(x)+B*h(x)");
-    L->addWidget(Introduction);
-
-    QLabel *IN_A_label = new QLabel("Input A: ");
-    QLabel *IN_B_label = new QLabel("Input B: ");
-
-    A_in = new QLineEdit("1");
-    B_in = new QLineEdit("1");
-    connect(A_in, &QLineEdit::textChanged, this, &Heu_func_select::update_A);
-    connect(B_in, &QLineEdit::textChanged, this, &Heu_func_select::update_B);
-
-    QPushButton *
-
-    IN_A->addWidget(IN_A_label);
-    IN_A->addWidget(A_in);
-
-    IN_B->addWidget(IN_B_label);
-    IN_B->addWidget(B_in);
-
-    L->addLayout(IN_A);
-    L->addLayout(IN_B);
-
-    mainUI->addLayout(L);*/
-
     QHBoxLayout *mainUI = new QHBoxLayout(this);
     QVBoxLayout *L = new QVBoxLayout;
 
@@ -105,10 +74,13 @@ void Heu_func_select::set(const QString & input1, const QString & input2, const 
 
 void Heu_func_select::graph(){
     Graph_select *g = new Graph_select;
+    connect(g, SIGNAL(sig_update(const double &, const int &, const int&)), this, SLOT(update(const double &, const int &, const int &)));
     g->set(ini_line, goal_line, A, B);
     g->show();
-    nodes_show->setText(QString::number(g->traveled_nodes()));
-    qDebug()<<g->traveled_nodes()<<Qt::endl;
-    time_show->setText(QString::number(g->time()));
-    steps_show->setText(QString::number(g->need_steps()));
+}
+
+void Heu_func_select::update(const double & t, const int & n, const int & s){
+    time_show->setText(QString::number(t));
+    nodes_show->setText(QString::number(n));
+    steps_show->setText(QString::number(s));
 }

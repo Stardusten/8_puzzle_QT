@@ -30,6 +30,7 @@ public slots:
     void update_A();
     void update_B();
     void graph();
+    void update(const double &, const int &, const int &);
 
 private:
     int A,B;

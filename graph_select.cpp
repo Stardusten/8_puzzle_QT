@@ -99,7 +99,7 @@ void Graph_select::paintEvent(QPaintEvent *){
                 steps=cur.steps;
                 painter.drawEllipse(cur.px-4,cur.py-4,8,8);
                 painter.drawText(cur.px-15,cur.py+18,"Goal");
-                return;
+                break;
             }
             nodes++;
             for(int i=0;i<4;i++){ // try 4 direction
@@ -126,7 +126,8 @@ void Graph_select::paintEvent(QPaintEvent *){
                 }
             }
         }
-        return;
     }
     end=clock();
+    emit sig_update((end-start)/1e3, nodes, steps);
+    return;
 }

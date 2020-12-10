@@ -71,7 +71,7 @@ eight_puzzle::eight_puzzle(QWidget *parent)
     output_line = new QLineEdit;
     output_line->setMaxLength(9); // 最多输入 9 个数
     output_line->setValidator(new QIntValidator());
-    output_line->setText("123456708");
+    output_line->setText("103426758");
     update_grid_goal(output_line->text());
     connect(output_line, &QLineEdit::textChanged, this, &eight_puzzle::update_grid_goal);
     OUT->addWidget(output,0);
